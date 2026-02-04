@@ -6,6 +6,7 @@ import registerAgendaTools from "./tools.js";
 
 const app = fastify();
 
+// Register the MCP plugin
 app.register(streamableHttp, {
     stateful: true,
     mcpEndpoint: '/mcp',
@@ -18,9 +19,9 @@ app.register(streamableHttp, {
         // register shared agenda tools
         registerAgendaTools(mcpServer);
 
-        return mcpServer.server;
+        return mcpServer.server as any;
     },
-    sessions: new Sessions<StreamableHTTPServerTransport>(),
+    sessions: new Sessions<StreamableHTTPServerTransport>() as any,
 });
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;

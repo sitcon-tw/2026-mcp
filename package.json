@@ -5,8 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "npx tsx index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tsc --noEmit",
+    "build": "tsc",
+    "start": "node build/server.js"
   },
   "keywords": [],
   "author": "",
