@@ -146,6 +146,13 @@ export const searchSessions = (query: string) => {
     }));
 };
 
+export const getSpeaker = (id: string) => {
+    if (!sessionData.speakers || !Array.isArray(sessionData.speakers)) {
+        return null;
+    }
+    return sessionData.speakers.find(s => s.id === id) || null;
+};
+
 export const genSessionShareUrl = (sessionId: string) => {
     return `https://sitcon.org/2026/agenda/${sessionId}`;
 };
@@ -184,6 +191,35 @@ export function registerSessionTools(server: McpServer) {
                         type: "text",
                         text: url,
                         query: sessionId,
+                    },
+                ],
+            };
+        }
+    );
+    server.tool(
+        "search_speaker",
+        "Search for a speaker by their ID.",
+        {
+            query: z.string().describe("The speaker ID to search for."),
+        },
+        async ({ query }) => {
+            const speaker = getSpeaker(query);
+            if (!speaker) {
+                return {
+                    content: [
+                        {
+                            type: "text",
+                            text: `Speaker with ID "${query}" not found.`,
+                        },
+                    ],
+                    isError: true,
+                };
+            }
+            return {
+                content: [
+                    {
+                        type: "text",
+                        text: JSON.stringify(speaker, null, 2),
                     },
                 ],
             };
