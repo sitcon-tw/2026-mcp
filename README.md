@@ -11,20 +11,27 @@ A Model Context Protocol (MCP) server for accessing SITCON 2026 session and spea
 ## Tools
 
 ### `search_sessions`
+
 Search for sessions in the SITCON 2026 agenda.
+
 - **sesssion**: `query` (string) - Keywords to match against titles, descriptions, tags, or speakers.
 
 ### `search_speaker`
+
 Get detailed information about a specific speaker.
+
 - **Input**: `query` (string) - The unique ID of the speaker.
 
 ### `gen_session_share_url`
+
 Generate a shareable URL for a specific session.
+
 - **Input**: `sessionId` (string) - The ID of the session.
 
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js (v18 or later recommended)
 - pnpm
 

@@ -1,32 +1,32 @@
 {
-  "name": "2026-mcp",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "dev": "tsx watch server.ts",
-    "start": "tsx server.ts",
-    "test": "tsc --noEmit"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.28.0",
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.25.3",
-    "@types/express": "^5.0.6",
-    "express": "^5.2.1",
-    "fs": "0.0.1-security",
-    "path": "^0.12.7",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
-    "zod": "^4.3.6"
-  },
-  "devDependencies": {
-    "@types/node": "^25.2.0",
-    "prettier": "^3.8.1",
-    "prettier-plugin-organize-imports": "^4.3.0",
-    "prettier-plugin-packagejson": "^3.0.0"
-  }
+	"name": "2026-mcp",
+	"version": "1.0.0",
+	"description": "",
+	"keywords": [],
+	"license": "ISC",
+	"author": "",
+	"type": "module",
+	"main": "index.js",
+	"scripts": {
+		"dev": "tsx watch server.ts",
+		"start": "tsx server.ts",
+		"test": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@modelcontextprotocol/sdk": "^1.25.3",
+		"@types/express": "^5.0.6",
+		"express": "^5.2.1",
+		"fs": "0.0.1-security",
+		"path": "^0.12.7",
+		"tsx": "^4.21.0",
+		"typescript": "^5.9.3",
+		"zod": "^4.3.6"
+	},
+	"devDependencies": {
+		"@types/node": "^25.2.0",
+		"prettier": "^3.8.1",
+		"prettier-plugin-organize-imports": "^4.3.0",
+		"prettier-plugin-packagejson": "^3.0.0"
+	},
+	"packageManager": "pnpm@10.28.0"
 }
