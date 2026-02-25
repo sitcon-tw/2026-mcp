@@ -373,6 +373,97 @@ export function registerSessionTools(server: McpServer) {
 			};
 		}
 	);
+
+	server.tool(
+		"get_code_of_conduct",
+		"Get the SITCON Code of Conduct (CoC) policies and guidelines.",
+		{},
+		async () => {
+			const cocContent = `SITCON Code of Conduct
+
+SITCON 冀望打造屬於學生自己的舞台，而我們也致力於為社群中的每位成員提供更友善、開放的環境。我們相信每位參與社群活動的夥伴都值得被尊重，而我們會盡力提供最安全的環境，讓參與 SITCON 盛會的每位朋友能夠認識個體間的差異、在社群中相互扶助、並鼓勵每個人揮灑屬於自己生命的色彩。
+
+因此，若有幸能在 SITCON 社群與您見面，無論您是以與會者、贊助商、工作人員、或是講者的身分參加活動，我們都希望您遵守以下的行為準則：
+- 尊重每一位參與者，將對方的感受放在心上。
+- 避免使用帶有侮辱、歧視、或具有潛在騷擾意涵的文字、言語及肢體動作。
+- 多關心周遭的社群夥伴，適度詢問對方是否需要協助。
+- 當遭遇危險、或發現事情不對勁時，適時尋求工作人員的支援與協助。
+- 在活動裡多交朋友，珍惜彼此相聚的時光！
+
+以下的行為是不被社群所容忍的：
+- 歧視行為，包含針對性別、性向、種族、外貌、宗教、年齡、身體狀況或個人身分的挑釁、冒犯、錯稱或差別待遇。
+- 騷擾行為，包含性騷擾、造成當事人反感的綽號或肢體接觸，以及任何形式的言語或肢體霸凌。
+- 公開發表、展示或放映含有侮辱、歧視、仇恨、暴力、或是性暗示的言論或影像。
+- 無故干擾議程或活動的正常進行，無視工作人員或與會者的制止。
+- 干擾、攻擊活動場地網路，未經同意蒐集或散佈個人資料。
+- 其他違反法律的行為。
+
+為了確保每位參與者的安全，我們將恪守以上規則。違反行為準則的參與者，我們將採取必要且合理的手段予以介入，包含但不限於將參與者請離現場、自相關名冊除名或列為不受歡迎對象，或在必要時移送警察機關法辦。若您或他人遇到了以上情況、或是有任何其他顧慮，都請立即尋求 SITCON 工作人員的協助。
+
+我們誠摯地邀請來到 SITCON 的朋友一同履行以上承諾，將 SITCON 打造為更友善、更溫暖的所在；讓每一位參與者，都能在社群的交流中共同成長、在人與人的互動中找到自信——而這正是我們所珍惜的、屬於學生社群的真正精神。
+
+詳細請參考：https://sitcon.org/code-of-conduct/`;
+
+			return {
+				content: [
+					{
+						type: "text",
+						text: cocContent
+					}
+				]
+			};
+		}
+	);
+
+	server.tool(
+		"get_theme",
+		"Get the SITCON 2026 Theme and its concept.",
+		{},
+		async () => {
+			const themeContent = `SITCON 2026 年會主題：Jam the Chaos
+
+時代的劇本已被打破，劃一的旋律變得七零八落在這混沌的時代，平衡能否被我們重新尋回？
+
+身處 2026，作為資訊人與學生的我們，正身在時代變革的風口浪尖。AI 的崛起挑戰了傳統的開發模式，定義資訊人價值的技術壁壘正逐漸崩塌。當創造的權力民主化，個體技術不再能作為我們的護城河時，「協作」成了我們最重要的課題。我們正迎向一場尋求與 AI、同儕、跨域夥伴協奏平衡的盛大混沌。但，如果「亂」不是阻礙，而是新平衡的起點呢？
+
+在即興音樂的 Jam Session 中，演奏不再有指揮，當 Jam 的節拍對不上，就讓我們一起創造新的節拍。當 Jam 的合聲不完美，這正是我們這個世代，兼容並蓄、豪邁不羈、百家爭鳴的聲音。
+
+在 SITCON 2026，我們邀請你一起加入這場 Jam。讓我們駕馭混沌，在紛亂中找到節奏，在協作中尋求共鳴。
+
+詳細請參考：https://sitcon.org/2026/`;
+
+			return {
+				content: [
+					{
+						type: "text",
+						text: themeContent
+					}
+				]
+			};
+		}
+	);
+
+	server.tool(
+		"get_sitcon_info",
+		"Get the introduction and spirit of SITCON (Students' Information Technology Conference).",
+		{},
+		async () => {
+			const sitconInfo = `SITCON 學生計算機年會 | Students' Information Technology Conference
+
+以學生為本、由學生自發舉辦，SITCON 學生計算機年會不只是學生「學以致用、教學相長」的實際展現，更冀望所有對資訊有興趣的學生，能夠在年會裏齊聚一堂，彼此激盪、傳承、啟發。
+
+詳細請參考：https://sitcon.org/`;
+
+			return {
+				content: [
+					{
+						type: "text",
+						text: sitconInfo
+					}
+				]
+			};
+		}
+	);
 }
 
 export default registerSessionTools;
