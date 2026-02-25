@@ -3,8 +3,15 @@ import { z } from "zod";
 
 // Fetch sessions from Github
 const sessionUrl = "https://sitcon.org/2026/sessions.json";
+const teamUrl = "https://raw.githubusercontent.com/sitcon-tw/2026/refs/heads/main/src/data/team.json";
 const fetchSessions = async () => {
 	const response = await fetch(sessionUrl);
+	const data = await response.json();
+	return data;
+};
+
+const fetchTeam = async () => {
+	const response = await fetch(teamUrl);
 	const data = await response.json();
 	return data;
 };
@@ -23,7 +30,28 @@ try {
 	console.error("Error fetching sessions:", error);
 }
 
+let teamData: TeamMember[] = [];
+try {
+	teamData = await fetchTeam();
+} catch (error) {
+	console.error("Error fetching team:", error);
+}
+
 // Type definitions
+export interface TeamRole {
+	name: string;
+	role: string;
+}
+
+export interface TeamMember {
+	name: string;
+	description: string;
+	teams: TeamRole[];
+	link?: string;
+	mode?: string;
+	color?: string;
+}
+
 export interface Speaker {
 	id: string;
 	avatar: string;
@@ -154,6 +182,36 @@ export const getSpeakerByName = (name: string) => {
 	return sessionData.speakers.filter(s => (s.zh?.name?.toLowerCase() || "").includes(lowerName) || (s.en?.name?.toLowerCase() || "").includes(lowerName));
 };
 
+export const searchMemberByTeam = (teamName: string, role?: string) => {
+	if (!teamData || !Array.isArray(teamData)) return [];
+	const lowerTeam = teamName.toLowerCase();
+	const lowerRole = role?.toLowerCase();
+
+	return teamData.filter(member => {
+		return member.teams.some(t => {
+			const matchTeam = t.name.toLowerCase().includes(lowerTeam);
+			const matchRole = lowerRole ? t.role.toLowerCase().includes(lowerRole) : true;
+			return matchTeam && matchRole;
+		});
+	});
+};
+
+export const searchMemberByName = (name: string) => {
+	if (!teamData || !Array.isArray(teamData)) return [];
+	const lowerName = name.toLowerCase();
+	return teamData.filter(member => member.name.toLowerCase().includes(lowerName));
+};
+
+export const searchMemberByDescriptionAndLink = (query: string) => {
+	if (!teamData || !Array.isArray(teamData)) return [];
+	const lowerQuery = query.toLowerCase();
+	return teamData.filter(member => {
+		const matchDesc = member.description?.toLowerCase().includes(lowerQuery) || false;
+		const matchLink = member.link?.toLowerCase().includes(lowerQuery) || false;
+		return matchDesc || matchLink;
+	});
+};
+
 export const genSessionShareUrl = (sessionId: string) => {
 	return `https://sitcon.org/2026/agenda/${sessionId}`;
 };
@@ -252,6 +310,64 @@ export function registerSessionTools(server: McpServer) {
 					{
 						type: "text",
 						text: JSON.stringify(speakers, null, 2)
+					}
+				]
+			};
+		}
+	);
+
+	server.tool(
+		"search_member_by_team",
+		"Search for a team member by their team name and optionally role.",
+		{
+			teamName: z.string().describe("The team name to search for."),
+			role: z.string().optional().describe("The optional role to filter by.")
+		},
+		async ({ teamName, role }) => {
+			const members = searchMemberByTeam(teamName, role);
+			return {
+				content: [
+					{
+						type: "text",
+						text: JSON.stringify(members, null, 2)
+					}
+				]
+			};
+		}
+	);
+
+	server.tool(
+		"search_member_by_name",
+		"Search for a team member by their name.",
+		{
+			name: z.string().describe("The name to search for.")
+		},
+		async ({ name }) => {
+			const members = searchMemberByName(name);
+			return {
+				content: [
+					{
+						type: "text",
+						text: JSON.stringify(members, null, 2)
+					}
+				]
+			};
+		}
+	);
+
+	server.tool(
+		"search_member_by_description_and_link",
+		"Search for a team member by their description or link.",
+		{
+			query: z.string().describe("The keyword to search in description or link.")
+		},
+		async ({ query }) => {
+			const members = searchMemberByDescriptionAndLink(query);
+			return {
+				content: [
+					{
+						type: "text",
+						text: JSON.stringify(members, null, 2)
 					}
 				]
 			};
